@@ -8,7 +8,7 @@ function createWebSocketServer(server, onConnection, onMessage, onClose, onError
   let wss = new WebSocketServer({
     server: server
   });
-  wss.broadcast = function broadcast(data) {
+  wss.broadcast = function broadcast(data) { // 自定义广播方法
     wss.clients.forEach(function each(client) {
       client.send(data);
     });
@@ -37,7 +37,7 @@ function createWebSocketServer(server, onConnection, onMessage, onClose, onError
       ws.close(4000, 'Invalid URL');
     }
     // check user:
-    let user = parseUser(ws.upgradeReq);
+    let user = parseUser(ws.upgradeReq); // 判断cookie中是否含有用户字段
     if (!user) {
       ws.close(4001, 'Invalid user');
     }
