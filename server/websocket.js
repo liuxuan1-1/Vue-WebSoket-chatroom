@@ -51,6 +51,11 @@ function createWebSocketServer(server, onConnection, onMessage, onClose, onError
 
 function onConnect() {
   let user = this.user;
+  if (!user) {
+    console.log(user, 'user not found in session.')
+    return;
+  }
+
   let msg = createMessage('join', user, `${user.name} joined.`);
   this.wss.broadcast(msg);
   // build user list:
@@ -70,6 +75,10 @@ function onMessage(message) {
 
 function onClose() {
   let user = this.user;
+  if (!user) {
+    console.log(user, 'user not found in session.')
+    return;
+  }
   let msg = createMessage('left', user, `${user.name} is left.`);
   this.wss.broadcast(msg);
 }
